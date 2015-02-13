@@ -37,5 +37,3 @@ unmanagedSourceDirectories in Compile <+= (sourceDirectory in Compile, scalaBina
 }
 
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0-M5" cross CrossVersion.full)
-
-seq(bintraySettings:_*)
