@@ -34,7 +34,7 @@ object MetaRest {
       }
       newFields.groupBy(_._1) map { case (annotation, values) =>
         val (className, classFields) = (macros.toTypeName(c)(annotation.capitalize), values.map(_._2))
-        q"@com.kifi.macros.json case class $className(..$classFields)" //TODO: Switch back to jsonstrict once this is fixed: https://github.com/kifi/json-annotation/issues/7
+        q"@us.bleibinha.spray.json.macros.jsonstrict case class $className(..$classFields)"
       }
     }
 

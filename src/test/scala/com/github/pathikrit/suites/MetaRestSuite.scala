@@ -4,9 +4,10 @@ import org.scalatest._, Matchers._
 
 class MetaRestSuite extends FunSuite {
   import com.github.pathikrit.MetaRest, MetaRest._
-  import play.api.libs.json.{Json, Reads, Writes}
+  import spray.json._
+  import DefaultJsonProtocol._
 
-  def testJsonRoundTrip[A: Reads : Writes](model: A) = Json.parse(Json.toJson(model).toString()).as[A] shouldEqual model
+  def testJsonRoundTrip[A: JsonFormat](model: A) = model.toJson.prettyPrint.parseJson.convertTo[A] shouldEqual model
 
   test("Generation of Get, Post, Patch, Put models with JSON capabilities") {
     @MetaRest case class User(
