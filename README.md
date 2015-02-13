@@ -2,6 +2,8 @@ MetaRest
 --------
 Use Scala macros to generate your RESTy models
 
+This is a forked version which generates spray-json formatters.
+
 Let's say you have the following `User` model in your business layer:
 
 ```scala
@@ -52,7 +54,7 @@ trait UserRepo {
 }
 ```
 
-MetaRest also automatically generates [spray-json](https://github.com/spray/spray-json)'s formatters for all the models using the [spray-json-annotation](https://github.com/ExNexu/spray-json-annotation) macro:
+This forked version of MetaRest also automatically generates [spray-json](https://github.com/spray/spray-json)'s formatters for all the models using the [spray-json-annotation](https://github.com/ExNexu/spray-json-annotation) macro:
 
 ```scala
 import spray.json._
