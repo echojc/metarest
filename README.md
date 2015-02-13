@@ -1,4 +1,4 @@
-MetaRest [![Build Status](https://travis-ci.org/pathikrit/metarest.png?branch=master)](http://travis-ci.org/pathikrit/metarest)
+MetaRest
 --------
 Use Scala macros to generate your RESTy models
 
@@ -52,38 +52,19 @@ trait UserRepo {
 }
 ```
 
-MetaRest also automatically generates Play's Json formatters for all the models using
-the [json-annotation](https://github.com/kifi/json-annotation) macro:
+MetaRest also automatically generates [spray-json](https://github.com/spray/spray-json)'s formatters for all the models using the [spray-json-annotation](https://github.com/ExNexu/spray-json-annotation) macro:
 
 ```scala
-import play.api.libs.json.Json
+import spray.json._
+import DefaultJsonProtocol._
 
 val jsonStr: String = """{
   "name": "Rick",
   "email": "awesome@msn.com"
 }"""
-val request: User.Post = Json.parse(jsonStr).as[User.Post]
-val json: JsValue = Json.toJson(request)
+val request: User.Post = jsonStr.parseJson.convertTo[User.Post]
+val json: JsValue = request.toJson
 
 println(s"REQUEST=$request", s"JSON=$json")
-assert(json.toString == jsonStr)
+assert(json.prettyPrint == jsonStr)
 ```
-
-Usage: In your `build.sbt`, add the following entries:
-
-```scala
-resolvers += Resolver.bintrayRepo("pathikrit", "maven")
-
-libraryDependencies ++= Seq(
-  "com.github.pathikrit" %% "metarest" % "0.3.1",
-  "com.kifi" %% "json-annotation" % "0.1",
-  "com.typesafe.play" %% "play-json" % "2.3.8" // No need to add play-json if you are already using Play 2.1+
-)
-
-addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0-M5" cross CrossVersion.full)
-```
-
-The latest published versions can be found here:
-http://dl.bintray.com/pathikrit/maven/com/github/pathikrit
-
-This library has been tested with both Scala 2.10 and 2.11
